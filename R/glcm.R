@@ -3,24 +3,26 @@
 #' This function supports calculating texture statistics derived from 
 #' grey-level co-occurrence matrices (GLCMs) in R.
 #'
+#' The \code{statistics} parameter should be a list, and can include any (one 
+#' or more) of the following: 'mean', 'mean_ENVI', 'variance', 'variance_ENVI', 
+#' 'homogeneity', 'contrast', 'dissimilarity', 'entropy', 'second_moment', 
+#' and/or 'correlation'. By default all of the statistics except for 
+#' "mean_ENVI" and "variance_ENVI" will be returned .
 #' @export
 #' @encoding UTF-8
-#' @import Rcpp RcppArmadillo
+#' @import Rcpp
 #' @usage glcm(x, n_grey = 32, window = c(3, 3), shift = c(1, 1), statistics = 
 #' c("mean", "variance", "homogeneity", "contrast", "dissimilarity", "entropy", 
-#' "second_moment", "correlation"),
-#' min_x=NULL, max_x=NULL, na_opt="any", na_val=NA, scale_factor=1, 
-#' asinteger=FALSE)
+#' "second_moment", "correlation"), min_x=NULL, max_x=NULL, na_opt="any", 
+#' na_val=NA, scale_factor=1, asinteger=FALSE)
 #' @param x a \code{RasterLayer} or \code{matrix}
 #' @param n_grey number of grey levels to use in texture calculation
 #' @param window the window size to consider for texture calculation as a two 
 #' element integer vector (number of rows, number of columns)
 #' @param shift a two element integer vector giving the shift (Q in Gonzalez 
-#' and Woods, 2008).
-#' @param statistics A list of GLCM texture measures to calculate.  Can include 
-#' any (one or more) of the following: 'mean', 'mean_ENVI', 'variance', 
-#' 'variance_ENVI', 'homogeneity', 'contrast', 'dissimilarity', 'entropy', 
-#' 'second_moment', and/or 'correlation'.
+#' and Woods, 2008), as (number of rows, number of columns)
+#' @param statistics A list of GLCM texture measures to calculate (see 
+#' Details).
 #' @param min_x minimum value of input \code{RasterLayer} (optional, 
 #' \code{glcm} will calculate if not supplied). Useful when running \code{glcm} 
 #' over blocks of a raster.
@@ -40,7 +42,8 @@
 #' results to integers (see \code{asinteger} argument).
 #' @param asinteger whether to round results to nearest integer. Can be used to 
 #' save space by saving results as, for example, an 'INT2S' \code{raster}.
-#' @return A \code{RasterLayer} with the requested GLCM texture measures.
+#' @return A \code{RasterLayer} or \code{RasterStack} with the requested GLCM 
+#' texture measures.
 #' @references
 #' Lu, D., and M. Batistella. 2005. Exploring TM image texture and its 
 #' relationships with biomass estimation in Rondônia, Brazilian Amazon.  Acta 
@@ -68,17 +71,15 @@ glcm <- function(x, n_grey=32, window=c(3, 3), shift=c(1, 1),
                  na_opt='any', na_val=NA, scale_factor=1, asinteger=FALSE) {
     if (length(window) != 2) {
         stop('window must be integer vector of length 2')
-    }
-    if (length(shift) != 2) {
+    } else if (length(shift) != 2) {
         stop('shift must be integer vector of length 2')
-    }
-    if ((window[1] < 3) || (window[2] < 3)) {
-        stop('both elements of window must be  >= 3')
-    }
-    if ((window[1] %% 2 == 0) || (window[2] %% 2 == 0)) {
+    } else if ((window[1] %% 2 == 0) || (window[2] %% 2 == 0)) {
         stop('both elements of window must be odd')
-    }
-    if (class(statistics) != 'character') {
+    } else if ((window[1] + abs(shift[1])) > nrow(x)) {
+        stop("window[1] + abs(shift[1]) must be less than nrow(x)")
+    } else if ((window[2] + abs(shift[2])) > ncol(x)) {
+        stop("window[2] + abs(shift[2]) must be less than ncol(x)")
+    } else if (class(statistics) != 'character') {
         stop('statistics must be a character vector')
     }
     avail_stats <- c('mean', 'mean_ENVI', 'variance', 'variance_ENVI', 
@@ -90,13 +91,12 @@ glcm <- function(x, n_grey=32, window=c(3, 3), shift=c(1, 1),
                    paste(statistics[!stat_check], collapse=', ')))
     }
     if (!(na_opt %in% c('any', 'center', 'ignore'))) {
-        stop('na_opt must be one of "any", "center", or "ignore"')
+        stop('na_opt must be "any", "center", or "ignore"')
     }
-
     # Resample the image to the required number of grey levels
     if (class(x) == 'RasterLayer') {
         if (!require(raster)) {
-            stop('"raster" package is required for handling raster objects')
+            stop('raster package is required for handling raster objects')
         }
         if (is.null(min_x)) min_x <- cellStats(x, 'min')
         if (is.null(max_x)) max_x <- cellStats(x, 'max')
@@ -112,8 +112,8 @@ glcm <- function(x, n_grey=32, window=c(3, 3), shift=c(1, 1),
         stop('x must be a RasterLayer or two-dimensional matrix')
     }
 
-    textures <- calc_texture(x_cut, n_grey, window, shift, 
-                                        statistics, na_opt, na_val)
+    textures <- calc_texture(x_cut, n_grey, window, shift, statistics, na_opt, 
+                             na_val)
 
     if (class(x) == 'RasterLayer') {
         if (dim(textures)[3] > 1) {

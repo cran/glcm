@@ -1,3 +1,2 @@
 library(testthat)
-library(glcm)
-test_package('glcm')
+test_check('glcm')

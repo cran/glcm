@@ -5,9 +5,8 @@
 \usage{
 glcm(x, n_grey = 32, window = c(3, 3), shift = c(1, 1), statistics =
 c("mean", "variance", "homogeneity", "contrast", "dissimilarity", "entropy",
-"second_moment", "correlation"),
-min_x=NULL, max_x=NULL, na_opt="any", na_val=NA, scale_factor=1,
-asinteger=FALSE)
+"second_moment", "correlation"), min_x=NULL, max_x=NULL, na_opt="any",
+na_val=NA, scale_factor=1, asinteger=FALSE)
 }
 \arguments{
   \item{x}{a \code{RasterLayer} or \code{matrix}}
@@ -20,14 +19,11 @@ asinteger=FALSE)
   rows, number of columns)}
 
   \item{shift}{a two element integer vector giving the
-  shift (Q in Gonzalez and Woods, 2008).}
+  shift (Q in Gonzalez and Woods, 2008), as (number of
+  rows, number of columns)}
 
   \item{statistics}{A list of GLCM texture measures to
-  calculate.  Can include any (one or more) of the
-  following: 'mean', 'mean_ENVI', 'variance',
-  'variance_ENVI', 'homogeneity', 'contrast',
-  'dissimilarity', 'entropy', 'second_moment', and/or
-  'correlation'.}
+  calculate (see Details).}
 
   \item{min_x}{minimum value of input \code{RasterLayer}
   (optional, \code{glcm} will calculate if not supplied).
@@ -59,13 +55,22 @@ asinteger=FALSE)
   for example, an 'INT2S' \code{raster}.}
 }
 \value{
-A \code{RasterLayer} with the requested GLCM texture
-measures.
+A \code{RasterLayer} or \code{RasterStack} with the
+requested GLCM texture measures.
 }
 \description{
 This function supports calculating texture statistics
 derived from grey-level co-occurrence matrices (GLCMs) in
 R.
+}
+\details{
+The \code{statistics} parameter should be a list, and can
+include any (one or more) of the following: 'mean',
+'mean_ENVI', 'variance', 'variance_ENVI', 'homogeneity',
+'contrast', 'dissimilarity', 'entropy', 'second_moment',
+and/or 'correlation'. By default all of the statistics
+except for "mean_ENVI" and "variance_ENVI" will be returned
+.
 }
 \examples{
 \dontrun{
