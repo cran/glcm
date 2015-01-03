@@ -1,6 +1,6 @@
 Package: glcm
-Version: 1.0
-Date: 2014-09-26
+Version: 1.2
+Date: 2015-1-2
 Title: Calculate textures from grey-level co-occurrence matrices
         (GLCMs) in R
 Authors@R: person("Alex", "Zvoleff", email="azvoleff@conservation.org",
@@ -17,8 +17,8 @@ License: GPL (>= 3)
 URL: http://www.azvoleff.com/glcm
 BugReports: https://github.com/azvoleff/glcm/issues
 LazyData: true
-Packaged: 2014-09-26 15:17:26 UTC; azvoleff
-Author: Alex Zvoleff [aut, cre]
 NeedsCompilation: yes
+Packaged: 2015-01-02 21:58:03 UTC; azvoleff
+Author: Alex Zvoleff [aut, cre]
 Repository: CRAN
-Date/Publication: 2014-09-26 18:50:27
+Date/Publication: 2015-01-03 06:58:58
