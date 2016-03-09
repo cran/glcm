@@ -21,7 +21,7 @@ calc_glcm_edge <- function(shift, window) {
 #'
 #' This function supports calculating texture statistics derived from 
 #' grey-level co-occurrence matrices (GLCMs). The default textures are 
-#' calculated using a 90 degree shift. See Details for other options.
+#' calculated using a 45 degree shift. See Details for other options.
 #'
 #' The \code{statistics} parameter should be a list, and can include any (one 
 #' or more) of the following: 'mean', 'mean_ENVI', 'variance', 'variance_ENVI', 
@@ -158,6 +158,7 @@ glcm <- function(x, n_grey=32, window=c(3, 3), shift=c(1, 1),
     if (!(na_opt %in% c('any', 'center', 'ignore'))) {
         stop('na_opt must be "any", "center", or "ignore"')
     }
+
     if (inherits(x, 'RasterLayer')) {
         if (is.null(min_x)) min_x <- raster::cellStats(x, 'min')
         if (is.null(max_x)) max_x <- raster::cellStats(x, 'max')
@@ -242,7 +243,7 @@ glcm <- function(x, n_grey=32, window=c(3, 3), shift=c(1, 1),
                     if (dim(out_block)[3] == 1) {
                         textures <- raster::raster(x)
                     } else {
-                        textures <- raster::brick(stack(rep(c(x), dim(out_block)[3])), values=FALSE)
+                        textures <- raster::brick(x, nl=dim(out_block)[3], values=FALSE)
                     }
                     textures <- raster::writeStart(textures, filename=raster::rasterTmpFile())
                     names(textures) <- layer_names

@@ -1,10 +1,10 @@
-196a44cdec35d898f5511d4ac75513be *DESCRIPTION
+43c843cfa97a2a5f894c32d6dffbf5dd *DESCRIPTION
 4278bcc2f3cdc51f5b99827637640571 *NAMESPACE
-11cb150d3e91191770cb502cf56325f6 *NEWS
+7f41a5cb4bf318be7167b30579c8466a *NEWS
 e44b78420c2217c9da83d47c835d1e13 *R/RcppExports.R
 95ccfff65371d32012931c9640898eda *R/glcm-package.R
-adfa8c70b74578d6d0866233777a932a *R/glcm.R
-df96fb1020312843bf9a60de9b00203e *README.md
+855e93c1d8f4548a197ccebb93bbe3a3 *R/glcm.R
+d16e8dc7f47110fbc5c35ed273be3e28 *README.md
 2028782885ce694e3ca6fdceb26b68cc *data/L5TSR_1986.RData
 8484013b7468c2388bd48f4a55948d54 *data/expected_textures_3x3_1x1.RData
 faf47bc774df4552feed5864825601f8 *data/expected_textures_5x3_n1xn2.RData
@@ -16,8 +16,9 @@ e64d7f8a7fba16df1651fbf4f53bc0bc *data/test_raster.RData
 855f69d1de8207f428770051f7fcafae *man/expected_textures_5x3_n1xn2.Rd
 5cd5d1387794681f4decd1b5dc921f62 *man/expected_textures_5x7_2x3.Rd
 79a4d51451e71f59649dae1ca82b0df5 *man/glcm-package.Rd
-d4887e3c961d59b7345abaaa77c863a5 *man/glcm.Rd
+703bd35d538af7310051a81615b653c4 *man/glcm.Rd
 d547fd5ee8f234e77c7139e8406edc1b *man/test_raster.Rd
+d2d14de06cb10e5f83eb3b7b2029b6b6 *src/Makevars
 1c28d8d7575218a53dc9a74e071e09d9 *src/RcppExports.cpp
 4c9835577e16bf1cdc4679d211ecc99f *src/calc_texture.cpp
 8ca6d991150dc79e7107edeb0f6b04b1 *tests/test-all.R
