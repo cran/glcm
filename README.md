@@ -1,11 +1,12 @@
 # glcm
 
-[![Build Status](https://travis-ci.org/azvoleff/glcm.png)](https://travis-ci.org/azvoleff/glcm)
+[![R-CMD-check](https://github.com/azvoleff/glcm/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/azvoleff/glcm/actions/workflows/R-CMD-check.yml)
+[![CI](https://github.com/azvoleff/glcm/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/azvoleff/glcm/actions/workflows/test-coverage.yml)
 
 ## Overview
 
 The `glcm` package enables calculating image textures derived from grey-level
-co-occurrence matrics (GLCMs) in R. The texture calculation is coded in C++
+co-occurrence matrices (GLCMs) in R. The texture calculation is coded in C++
 to optimize computation time. The `glcm` function in the package can compute 
 the following texture statistics: mean (using either of two definitions), 
 variance (using either of two definitions), homogeneity, contrast, 
@@ -46,9 +47,7 @@ install_github('azvoleff/glcm')
 ## Author Contact Information
 
 [Alex Zvoleff](mailto:azvoleff@conservation.org)  
-Postdoctoral Associate  
-Tropical Ecology Assessment and Monitoring (TEAM) Network  
 Conservation International  
-2011 Crystal Dr. Suite 500  
+2011 Crystal Dr. Suite 600  
 Arlington, VA 22202  
 USA
